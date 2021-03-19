@@ -6,8 +6,8 @@ import argparse
 import numpy as np
 import re
 
-import gm
-import craterstatslib as cst
+import craterstats.gm as gm
+import craterstats as cst
 
 
 class AppendPlotDict(argparse.Action):
@@ -29,8 +29,8 @@ class SpacedString(argparse.Action):
 
 
 def get_parser():
-    if "parser" in get_parser.__dict__:
-        return get_parser.parser
+    # if "parser" in get_parser.__dict__:
+    #     return get_parser.parser
 
     parser = argparse.ArgumentParser(description='Craterstats: a tool to analyse and plot crater count data for planetary surface dating.')
 
@@ -86,7 +86,7 @@ def get_parser():
                              "resurf_showall={1,0}, show all data with resurfacing correction,"
                              "isochron={1,0}, show whole fitted isochron,"
                              "offset_age=[x,y], in 1/20ths of decade")
-    get_parser.parser=parser
+    # get_parser.parser=parser
     return parser
 
 
@@ -201,7 +201,7 @@ def source_cmds(src):
         main(a)
     print('\nProcessing complete.')
 
-def demo(d=None,src='config/demo_commands.txt'):
+def demo(d=None,src='craterstats/config/demo_commands.txt'):
     cmd=gm.read_textfile(src, ignore_blank=True, ignore_hash=True)
     out='demo/'
     os.makedirs(out,exist_ok=True)
@@ -219,8 +219,8 @@ def demo(d=None,src='config/demo_commands.txt'):
 def main(args0):
     args = get_parser().parse_args(args0)
 
-    template="config/default.plt"
-    functions="config/functions.txt"
+    template="craterstats/config/default.plt"
+    functions="craterstats/config/functions.txt"
 
     c = gm.read_textstructure(template if args.template is None else args.template)
     f = gm.read_textstructure(functions)
